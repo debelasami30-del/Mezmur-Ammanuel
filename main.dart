@@ -31,9 +31,12 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final List> allMezmurs = [
     {'title': 'መዝሙረ ዳዊት ምዕራፍ 23', 'category': 'መዝሙረ ዳዊት', 'artist': 'ንባብ'},
+    {'title': 'መዝሙረ ዳዊት ምዕራፍ 51', 'category': 'መዝሙረ ዳዊት', 'artist': 'ንባብ'},
     {'title': 'አማኑኤል መጠጊያዬ ነው', 'category': 'ፕሮቴስታንት መዝሙር', 'artist': 'ዘማሪ ቴዎድሮስ ዮሴፍ'},
     {'title': 'እግዚአብሔር እረኛዬ ነው', 'category': 'ኦርቶዶክስ መዝሙር', 'artist': 'ሊቀ መዘምራን በእደማርያም'},
     {'title': 'ልቤ በእግዚአብሔር ደስ ይለዋል', 'category': 'ፕሮቴስታንት መዝሙር', 'artist': 'አልበም ፊት አውራሪ'},
+    {'title': 'ክብርን ምስጋናን እናቀርባለን', 'category': 'ፕሮቴስታንት መዝሙር', 'artist': 'ዘማሪ ኤፍሬም አለሙ'},
+    {'title': 'በእግዚአብሔር ቤት አድርጋለሁ', 'category': 'ኦርቶዶክስ መዝሙር', 'artist': 'መዘምራን ክፍለ ሀገር'},
   ];
 
   List> filteredMezmurs = [];
