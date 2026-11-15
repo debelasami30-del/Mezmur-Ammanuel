@@ -113,7 +113,25 @@ class _HomeScreenState extends State<HomeScreen> {
                               style: TextStyle(color: Colors.grey[600]),
                             ),
                             trailing: const Icon(Icons.play_arrow, color: Colors.deepPurple),
-                            onTap: () {},
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text(filteredMezmurs[index]['title']!),
+                                    content: Text('${filteredMezmurs[index]['artist']} ከዩቲዩብ ሊጫወት ዝግጁ ነው!'),
+                                    actions: [
+                                      TextButton(
+                                        child: const Text('ዝጋ'),
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            },
                           ),
                         );
                       },
