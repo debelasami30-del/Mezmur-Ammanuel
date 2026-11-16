@@ -1,4 +1,3 @@
-
 name: Build Flutter APK
 
 on:
@@ -32,6 +31,25 @@ jobs:
         run: |
           mkdir -p android/app/src/main
           echo "flutter.source=.." > android/local.properties
+          cat << 'EOF' > android/settings.gradle
+          pluginManagement {
+              def flutterSdkPath = {
+                  def properties = new Properties()
+                  file("local.properties").withInputStream { properties.load(it) }
+                  def flutterSdkPath = properties.getProperty("flutter.sdk")
+                  assert flutterSdkPath != null, "flutter.sdk not set in local.properties"
+                  return flutterSdkPath
+              }()
+              includeBuild("$flutterSdkPath/packages/flutter_tools/gradle")
+          }
+          plugins {
+              id "dev.flutter.flutter-plugin-loader" version "1.0.0"
+              id "com.android.application" version "7.3.0" apply false
+              id "org.jetbrains.kotlin.android" version "1.7.10" apply false
+          }
+          include ":app"
+          EOF
+
           cat << 'EOF' > android/build.gradle
           allprojects {
               repositories {
@@ -50,9 +68,7 @@ jobs:
               delete rootProject.buildDir
           }
           EOF
-          cat << 'EOF' > android/settings.gradle
-          include ':app'
-          EOF
+
           cat << 'EOF' > android/app/build.gradle
           plugins {
               id "com.android.application"
@@ -79,12 +95,3 @@ jobs:
               source '../..'
           }
           EOF
-
-      - name: Build APK
-        run: flutter build apk --release
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-release
-          path: build/app/outputs/flutter-apk/app-release.apk
