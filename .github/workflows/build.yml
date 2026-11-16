@@ -30,7 +30,17 @@ jobs:
       - name: Create Full Android Scaffolding
         run: |
           mkdir -p android/app/src/main
+          mkdir -p android/gradle/wrapper
           echo "flutter.source=.." > android/local.properties
+          
+          cat << 'EOF' > android/gradle/wrapper/gradle-wrapper.properties
+          distributionBase=GRADLE_USER_HOME
+          distributionPath=wrapper/dists
+          distributionUrl=https\://services.gradle.org/distributions/gradle-8.0-bin.zip
+          zipStoreBase=GRADLE_USER_HOME
+          zipStorePath=wrapper/dists
+          EOF
+
           cat << 'EOF' > android/settings.gradle
           pluginManagement {
               repositories {
