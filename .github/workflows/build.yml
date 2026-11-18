@@ -24,7 +24,7 @@ jobs:
           flutter-version: '3.19.0'
           channel: 'stable'
 
-      - name: Auto-Create Main and Scaffolding
+      - name: Auto-Create Scaffolding and Resources
         run: |
           mkdir -p lib
           cat << 'EOF' > lib/main.dart
@@ -54,10 +54,48 @@ jobs:
           }
           EOF
 
-          mkdir -p android/app/src/main
+          mkdir -p android/app/src/main/res/mipmap-hdpi
+          mkdir -p android/app/src/main/res/mipmap-mdpi
+          mkdir -p android/app/src/main/res/mipmap-xhdpi
+          mkdir -p android/app/src/main/res/mipmap-xxhdpi
+          mkdir -p android/app/src/main/res/mipmap-xxxhdpi
           mkdir -p android/gradle/wrapper
           echo "flutter.source=.." > android/local.properties
           
+          # Create a dummy icon file to satisfy resource linking
+          touch android/app/src/main/res/mipmap-hdpi/ic_launcher.png
+
+          cat << 'EOF' > android/app/src/main/AndroidManifest.xml
+          <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+              package="com.example.mezmur_ammanuel">
+              <application
+                  android:label="mezmur_ammanuel"
+                  android:name="${applicationName}"
+                  android:icon="@mipmap/ic_launcher">
+                  <activity
+                      android:name=".MainActivity"
+                      android:exported="true"
+                      android:launchMode="singleTop"
+                      android:theme="@style/LaunchTheme"
+                      android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+                      android:hardwareAccelerated="true"
+                      android:windowSoftInputMode="adjustResize">
+                      <meta-data
+                        android:name="io.flutter.embedding.android.NormalTheme"
+                        android:resource="@style/NormalTheme"
+                        />
+                      <intent-filter>
+                          <action android:name="android.intent.action.MAIN"/>
+                          <category android:name="android.intent.category.LAUNCHER"/>
+                      </intent-filter>
+                  </activity>
+                  <meta-data
+                      android:name="flutterEmbedding"
+                      android:value="2" />
+              </application>
+          </manifest>
+          EOF
+
           cat << 'EOF' > android/gradle.properties
           org.gradle.jvmargs=-Xmx1536M
           android.useAndroidX=true
