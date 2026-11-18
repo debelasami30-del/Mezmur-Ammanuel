@@ -63,8 +63,7 @@ jobs:
               package="com.example.mezmur_ammanuel">
               <application
                   android:label="mezmur_ammanuel"
-                  android:name="${applicationName}"
-                  android:icon="@android:ic_menu_compass">
+                  android:name="${applicationName}">
                   <activity
                       android:name=".MainActivity"
                       android:exported="true"
