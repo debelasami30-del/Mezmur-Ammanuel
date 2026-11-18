@@ -88,6 +88,9 @@ jobs:
           org.gradle.jvmargs=-Xmx1536M
           android.useAndroidX=true
           android.enableJetifier=true
+          org.gradle.parallel=true
+          org.gradle.caching=true
+          org.gradle.daemon=false
           EOF
 
           cat << 'EOF' > android/gradle/wrapper/gradle-wrapper.properties
@@ -113,6 +116,13 @@ jobs:
                   return flutterSdkPath
               }()
               includeBuild("$flutterSdkPath/packages/flutter_tools/gradle")
+          }
+          dependencyResolutionManagement {
+              repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)
+              repositories {
+                  google()
+                  mavenCentral()
+              }
           }
           plugins {
               id "dev.flutter.flutter-plugin-loader" version "1.0.0"
